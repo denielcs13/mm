@@ -13,9 +13,8 @@ function tree_data($userid){
     $data['left']=$result['left'];
     $data['right']=$result['right'];
     $data['leftcount']=$result['leftcount'];
-    $data['rightcount']=$result['rightcount'];
-    
-    return $data;   
+    $data['rightcount']=$result['rightcount'];    
+    return $data;  
     
 }
 ?>
@@ -56,7 +55,8 @@ function tree_data($userid){
     <meta name="author" content="">
 
     <title>SB Admin 2 - Bootstrap Admin Theme</title>
-
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="ajax_data.js"></script>
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -138,10 +138,10 @@ table.forth-ch table {
         <th colspan="10" style="background: #31b131;text-align:center"><h2><a href="#" onclick="ntree(1)" title=""></a> <?php echo $search; ?></h2>
 </th></tr>
 <tr>
-  <th align="left">Address:</th><td colspan="3" align="left"> <?= $userinfo['address'] ?></td><th>Trading ROI:</th><td class="labl">0.00000000 coin</td></tr>
+  <th align="left">Address:</th><td colspan="3" align="left"> <?= $userinfo['address'] ?></td><th>Status:</th><td class="labl"><?= $userinfo['status'] ?></td></tr>
 <!-- <tr><th align="left">BTC Purchase Address:</th><td colspan="3" align="left"> 1922eFxuK4sXDbGngf5KSWn8pMZveTwaWh</td><th>amount:</th><td class="labl">0 ZPR</td></tr>-->
  <tr><th align="left">Email Address:</th><td colspan="3" align="left"> <?= $userinfo['email'] ?></td><th>Total Paid:</th><td class="labl"><?= $income['total_bal'] ?></td></tr>
-<tr><th align="left">Placement ID:</th><td align="left"><?= $userinfo['under_userid'] ?>  </td><th align="left">Placement :</th><td> 	<?= $userinfo['side'] ?>
+<tr><th align="left">Placement ID:</th><td align="left"><?= $userinfo['under_userid'] ?>  </td><th align="left">Placement :</th><td>    <?= $userinfo['side'] ?>
   </td><th align="left">Active Direct :</th><td> 0</td></tr>
   <tr><th align="left">Sponser ID:</th><td align="left"> </td><th align="left">Left coin :</th><td> 409355.704</td><th align="left">Right coin:</th><td> 0</td></tr>
   <tr><th align="left">Join Date:</th><td align="left"> <?= $userinfo['date'] ?></td><th align="left">Left Count:</th><td> <?= $countinfo['leftcount'] ?></td><th align="left">Right Count:</th><td> <?= $countinfo['rightcount'] ?></td></tr>
@@ -178,7 +178,7 @@ table.forth-ch table {
                                 <table width="100%"  style="text-align:center;">
                                     
                                     <tr>                                        
-                                        <td colspan=""><a href="#"><i class="fa fa-user fa-4x" style="color: blue"></i><p><?php echo $search; ?></p></a>
+                                        <td colspan=""><a href="#" class="hover" id="<?php echo $search; ?>"><i class="fa fa-user fa-4x" style="color: blue"></i><p><?php echo $search; ?></p></a>
                                         <font color="brown" class="pos"><br><img src="./images/genealogy_08.png" style="width: 50%;"></font>
                                     </td>                                   
                                     
@@ -200,7 +200,7 @@ table.forth-ch table {
                                     
                                     <table width="100%"  style="text-align:center;">                                    
                                     <tr>                                             
-                                        <td colspan=""><a href="tree.php?search-id=<?php echo $first_left_user;?>"><i class="fa fa-user fa-4x" style="color: pink"></i><p>
+                                        <td colspan=""><i class="fa fa-user fa-4x" style="color: pink"></i><p>
                                                     
                                             <?php if($data['left']==""){
                                                 
@@ -209,12 +209,12 @@ table.forth-ch table {
                                             }
                                         else {
                                             ?>
-                                          <?php echo $first_left_user;?>
+                                          <a href="#" class="hover" id="<?php echo $first_left_user; ?>"><?php echo $first_left_user;?></a>
                                        <?php }?>
-                                           </p></a>
+                                           </p>
                                     <font color="brown" class="pos"><br><img src="./images/genealogy_08.png" style="width: 50%;width: 52%;position: relative;left: 9px;"></font></td>
                                     
-                                        <td colspan=""><a href="tree.php?search-id=<?php echo $first_right_user;?>"><i class="fa fa-user fa-4x" style="color: pink"></i><p>
+                                        <td colspan=""><i class="fa fa-user fa-4x" style="color: pink"></i><p>
                                             <?php if($data['right']==""){
                                                 
                                               echo 'NA';
@@ -222,8 +222,8 @@ table.forth-ch table {
                                             }
                                         else {
                                             ?>
-                                          <?php echo $first_right_user;?>
-                                       <?php }?></p></a>
+                                          <a href="#" class="hover" id="<?php echo $first_right_user; ?>"><?php echo $first_right_user;?></a>
+                                       <?php }?></p>
                                     <font color="brown" class="pos"><br><img src="./images/genealogy_08.png"   style="width: 50%;"></font></td>
                                        
                                     </tr>
@@ -247,7 +247,7 @@ table.forth-ch table {
                                 <table width="100%">
                                     <tr>
                                        
-                                        <td colspan=""><a href="tree.php?search-id=<?php echo $second_left_user;?>"><i class="fa fa-user fa-4x" style="color: #cc006a"></i><p>
+                                        <td colspan=""><i class="fa fa-user fa-4x" style="color: #cc006a"></i><p>
                                             <?php if($data_first_left_user['left']==""){
                                                 
                                               echo 'NA';
@@ -255,10 +255,10 @@ table.forth-ch table {
                                             }
                                         else {
                                             ?>
-                                          <?php echo $second_left_user;?>
-                                       <?php }?></p></a></td>
+                                          <a href="#" class="hover" id="<?php echo $second_left_user; ?>"><?php echo $second_left_user;?></a>
+                                       <?php }?></p></td>
                                     
-                                        <td colspan=""><a href="tree.php?search-id=<?php echo $second_right_user;?>"><i class="fa fa-user fa-4x" style="color: #cc006a"></i><p>
+                                        <td colspan=""><i class="fa fa-user fa-4x" style="color: #cc006a"></i><p>
                                              <?php if($data_first_left_user['right']==""){
                                                 
                                               echo 'NA';
@@ -266,8 +266,8 @@ table.forth-ch table {
                                             }
                                         else {
                                             ?>
-                                          <?php echo $second_right_user;?>
-                                       <?php }?></p></a></td>
+                                          <a href="#" class="hover" id="<?php echo $second_right_user; ?>"><?php echo $second_right_user;?></a>
+                                       <?php }?></p></td>
                                    
                                     </tr>
                                 </table>
@@ -277,7 +277,7 @@ table.forth-ch table {
                                 <table width="100%">
                                     <tr>
                                        
-                                        <td colspan=""><a href="tree.php?search-id=<?php echo $third_left_user;?>"><i class="fa fa-user fa-4x" style="color: #cc006a"></i><p>
+                                        <td colspan=""><i class="fa fa-user fa-4x" style="color: #cc006a"></i><p>
                                             <?php if($data_first_right_user['left']==""){
                                                 
                                               echo 'NA';
@@ -285,10 +285,10 @@ table.forth-ch table {
                                             }
                                         else {
                                             ?>
-                                          <?php echo $third_left_user;?>
-                                       <?php }?></p></a></td>
+                                          <a href="#" class="hover" id="<?php echo $third_left_user; ?>"><?php echo $third_left_user;?></a>
+                                       <?php }?></p></td>
                                     
-                                        <td colspan=""><a href="tree.php?search-id=<?php echo $third_right_user;?>"><i class="fa fa-user fa-4x" style="color: #cc006a"></i><p>
+                                        <td colspan=""><i class="fa fa-user fa-4x" style="color: #cc006a"></i><p>
                                             <?php if($data_first_right_user['right']==""){
                                                 
                                               echo 'NA';
@@ -296,8 +296,8 @@ table.forth-ch table {
                                             }
                                         else {
                                             ?>
-                                          <?php echo $third_right_user;?>
-                                       <?php }?></p></a></td>
+                                          <a href="#" class="hover" id="<?php echo $third_right_user; ?>"><?php echo $third_right_user;?></a>
+                                       <?php }?></p></td>
                                     
                                     </tr>
                                 </table>
@@ -331,7 +331,7 @@ table.forth-ch table {
                                 <table> 
                             <tr>
                                 <font color="brown" class="pos"><br><img src="./images/genealogy_21.png" style="width: 50%;width: 52%;position: relative;left: 9px;"></font>
-                                <td ><a href="tree.php?search-id=<?php echo $fourth_left_user;?>"><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
+                                <td ><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
                                     <?php if($data_second_left_user['left']==""){
                                                 
                                               echo 'NA';
@@ -339,9 +339,9 @@ table.forth-ch table {
                                             }
                                         else {
                                             ?>
-                                          <?php echo $fourth_left_user;?>
-                                       <?php }?></p></a></td>
-                                <td ><a href="tree.php?search-id=<?php echo $fouth_right_user;?>"><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
+                                          <a href="#" class="hover" id="<?php echo $fourth_left_user; ?>"><?php echo $fourth_left_user;?></a>
+                                       <?php }?></p></td>
+                                <td ><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
                                     <?php if($data_second_left_user['right']==""){
                                                 
                                               echo 'NA';
@@ -349,8 +349,8 @@ table.forth-ch table {
                                             }
                                         else {
                                             ?>
-                                          <?php echo $fouth_right_user;?>
-                                       <?php }?></p></a></td>
+                                          <a href="#" class="hover" id="<?php echo $fouth_right_user; ?>"><?php echo $fouth_right_user;?></a>
+                                       <?php }?></p></td>
                             </tr>
                                  </table> 
                                 </td>
@@ -359,7 +359,7 @@ table.forth-ch table {
                                 <table> 
                             <tr>
                                 <font color="brown" class="pos"><br><img src="./images/genealogy_21.png" style="width: 50%;width: 52%;position: relative;left: 9px;"></font>
-                                <td ><a href="tree.php?search-id=<?php echo $fourth_left_left_user;?>"><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
+                                <td ><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
                                     <?php if($data_second_right_user['left']==""){
                                                 
                                               echo 'NA';
@@ -367,9 +367,9 @@ table.forth-ch table {
                                             }
                                         else {
                                             ?>
-                                          <?php echo $fourth_left_left_user;?>
-                                       <?php }?></p></a></td>
-                                <td ><a href="tree.php?search-id=<?php echo $fourth_left_right_user;?>"><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
+                                          <a href="#" class="hover" id="<?php echo $fourth_left_left_user; ?>"><?php echo $fourth_left_left_user;?></a>
+                                       <?php }?></p></td>
+                                <td ><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
                                     <?php if($data_second_right_user['right']==""){
                                                 
                                               echo 'NA';
@@ -377,8 +377,8 @@ table.forth-ch table {
                                             }
                                         else {
                                             ?>
-                                          <?php echo $fourth_left_right_user;?>
-                                       <?php }?></p></a></td>
+                                          <a href="#" class="hover" id="<?php echo $fourth_left_right_user; ?>"><?php echo $fourth_left_right_user;?></a>
+                                       <?php }?></p></td>
                             </tr>
                                  </table> 
                                 </td>
@@ -387,7 +387,7 @@ table.forth-ch table {
                                 <table> 
                             <tr>
                                 <font color="brown" class="pos"><br><img src="./images/genealogy_21.png" style="width: 50%;width: 52%;position: relative;left: 9px;"></font>
-                                <td ><a href="tree.php?search-id=<?php echo $fifth_left_user;?>"><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
+                                <td ><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
                                     <?php if($data_third_left_user['left']==""){
                                                 
                                               echo 'NA';
@@ -395,9 +395,9 @@ table.forth-ch table {
                                             }
                                         else {
                                             ?>
-                                          <?php echo $fifth_left_user;?>
-                                       <?php }?></p></a></td>
-                                <td ><a href="tree.php?search-id=<?php echo $fifth_right_user;?>"><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
+                                          <a href="#" class="hover" id="<?php echo $fifth_left_user; ?>"><?php echo $fifth_left_user;?></a>
+                                       <?php }?></p></td>
+                                <td ><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
                                     <?php if($data_third_left_user['right']==""){
                                                 
                                               echo 'NA';
@@ -405,8 +405,8 @@ table.forth-ch table {
                                             }
                                         else {
                                             ?>
-                                          <?php echo $fifth_right_user;?>
-                                       <?php }?></p></a></td>
+                                          <a href="#" class="hover" id="<?php echo $fifth_right_user; ?>"><?php echo $fifth_right_user;?></a>
+                                       <?php }?></p></td>
                             </tr>
                                  </table> 
                                 </td>
@@ -415,7 +415,7 @@ table.forth-ch table {
                                 <table> 
                             <tr>
                                 <font color="brown" class="pos"><br><img src="./images/genealogy_21.png" style="width: 50%;width: 52%;position: relative;left: 9px;"></font>
-                                <td ><a href="tree.php?search-id=<?php echo $sixth_left_user;?>"><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
+                                <td ><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
                                     <?php if($data_third_right_user['left']==""){
                                                 
                                               echo 'NA';
@@ -423,9 +423,9 @@ table.forth-ch table {
                                             }
                                         else {
                                             ?>
-                                          <?php echo $sixth_left_user;?>
-                                       <?php }?></p></a></td>
-                                <td ><a href="tree.php?search-id=<?php echo $sixth_right_user;?>"><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
+                                          <a href="#" class="hover" id="<?php echo $sixth_left_user; ?>"><?php echo $sixth_left_user;?></a>
+                                       <?php }?></p></td>
+                                <td ><i class="fa fa-user fa-4x" style="color: #2672ec"></i><p>
                                     <?php if($data_third_right_user['right']==""){
                                                 
                                               echo 'NA';
@@ -433,8 +433,8 @@ table.forth-ch table {
                                             }
                                         else {
                                             ?>
-                                          <?php echo $sixth_right_user;?>
-                                       <?php }?></p></a></td>
+                                          <a href="#" class="hover" id="<?php echo $sixth_right_user; ?>"><?php echo $sixth_right_user;?></a>
+                                       <?php }?></p></td>
                                  </tr>
                                  </table> 
                                 </td>
@@ -452,6 +452,17 @@ table.forth-ch table {
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-12" id="popover_html" style="width: 30em; display:none;">
+<table class="table" >
+<tbody><tr><th>Login ID</th><th>Name</th><th>Total Bal</th></tr>
+<tr><td>p_id (p_id)</td><td>p_name</td><td>p_bal</td></tr>
+<tr><th>Date</th><th>Sponser ID</th><th>Status</th></tr>
+<tr><td>p_design</td><td>p_sid</td><td>p_gender</td></tr>
+<tr><th>Address</th><th>Left Count</th><th>Right Count</th></tr>
+<tr><td>p_address</td><td>p_age</td><td>p_rightcount</td></tr></tbody>
+</table>
+</div> 
+           <br>
             </div>
             <!-- /.container-fluid -->
         </div>
